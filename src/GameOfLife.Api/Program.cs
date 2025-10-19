@@ -11,7 +11,7 @@ builder.Services.Configure<GameOfLifeSettings>(
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<GameOfLifeContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IGameOfLifeService, GameOfLifeService>();
 builder.Services.AddScoped<IBoardRepository, BoardRepository>();

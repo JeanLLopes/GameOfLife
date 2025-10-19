@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\GameOfLife.Api", "src\GameOfLife.Api\GameOfLife.Api.csproj", "{95FD297A-4E68-46C1-A270-5AF5397EED97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Api", "src\GameOfLife.Api\GameOfLife.Api.csproj", "{95FD297A-4E68-46C1-A270-5AF5397EED97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\GameOfLife.Core", "src\GameOfLife.Core\GameOfLife.Core.csproj", "{1D85B3B8-CA26-40B8-A2BA-804836FD7894}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Core", "src\GameOfLife.Core\GameOfLife.Core.csproj", "{1D85B3B8-CA26-40B8-A2BA-804836FD7894}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src\GameOfLife.Infrastructure", "src\GameOfLife.Infrastructure\GameOfLife.Infrastructure.csproj", "{E377481A-0F3E-4568-840C-E8650ADD5564}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Infrastructure", "src\GameOfLife.Infrastructure\GameOfLife.Infrastructure.csproj", "{E377481A-0F3E-4568-840C-E8650ADD5564}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -15,12 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{188F21D2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameOfLife.Core.Tests", "GameOfLife.Core.Tests", "{27F1D8AB-AAF2-4969-AC7D-1A3041D40B76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests\GameOfLife.Core.Tests", "tests\GameOfLife.Core.Tests\GameOfLife.Core.Tests.csproj", "{4602A126-4F94-4AFE-9E86-0977A96F6F77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Core.Tests", "tests\GameOfLife.Core.Tests\GameOfLife.Core.Tests.csproj", "{4602A126-4F94-4AFE-9E86-0977A96F6F77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
 		.Dockerfile = .Dockerfile
+		README.md = README.md
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Global
