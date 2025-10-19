@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameOfLife.Core\GameOfLife.Core.csproj" />
+    <ProjectReference Include="..\..\src\GameOfLife.Core\GameOfLife.Core.csproj" />
   </ItemGroup>
 
 </Project>

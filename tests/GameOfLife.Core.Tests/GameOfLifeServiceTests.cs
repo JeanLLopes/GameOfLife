@@ -36,7 +36,7 @@ public class GameOfLifeServiceTests
     }
 
     [Fact]
-    public void CalculateNextState_OscillatorBlinker_ShouldOscillate() // [cite: 40] Edge case
+    public void CalculateNextState_OscillatorBlinker_ShouldOscillate()
     {
         // Arrange
         var initialState = new bool[][]
