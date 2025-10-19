@@ -38,7 +38,7 @@ public class GameOfLifeServiceTests
     [Fact]
     public void CalculateNextState_OscillatorBlinker_ShouldOscillate() // [cite: 40] Edge case
     {
-        // Arrange (Estado 1)
+        // Arrange
         var initialState = new bool[][]
         {
             new[] { false, false, false },
@@ -47,7 +47,7 @@ public class GameOfLifeServiceTests
         };
         var board = new Board(initialState);
 
-        // Act (Geração 2)
+        // Act
         var nextBoard = _service.CalculateNextState(board);
         var expectedState1 = new bool[][]
         {
@@ -61,13 +61,13 @@ public class GameOfLifeServiceTests
         nextBoard.Generation.Should().Be(2);
         nextBoard.State.Should().BeEquivalentTo(expectedState1);
 
-        // Act (Geração 3)
+        // Act 
         var finalBoard = _service.CalculateNextState(nextBoard);
 
         // Assert
         finalBoard.IsStable.Should().BeFalse();
         finalBoard.Generation.Should().Be(3);
-        finalBoard.State.Should().BeEquivalentTo(initialState); // Deve voltar ao original
+        finalBoard.State.Should().BeEquivalentTo(initialState); 
     }
 
     [Fact]
@@ -80,7 +80,7 @@ public class GameOfLifeServiceTests
             new[] { true, false, false },
             new[] { false, false, false }
         };
-        var board = new Board(initialState); // Célula (0,0) tem 2 vizinhos
+        var board = new Board(initialState);
 
         // Act
         var nextBoard = _service.CalculateNextState(board);
@@ -90,7 +90,7 @@ public class GameOfLifeServiceTests
     }
 
     [Fact]
-    public void CalculateNextState_CellWithOneNeighbor_ShouldDie() // [cite: 40] Loneliness
+    public void CalculateNextState_CellWithOneNeighbor_ShouldDie() 
     {
         // Arrange
         var initialState = new bool[][]
@@ -99,7 +99,7 @@ public class GameOfLifeServiceTests
             new[] { false, true,  false },
             new[] { false, false, false }
         };
-        var board = new Board(initialState); // Célula (0,0) tem 1 vizinho
+        var board = new Board(initialState); 
 
         // Act
         var nextBoard = _service.CalculateNextState(board);

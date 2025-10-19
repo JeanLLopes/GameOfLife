@@ -25,20 +25,19 @@ public class GameOfLifeService : IGameOfLifeService
                 int liveNeighbors = CountLiveNeighbors(currentState, i, j);
                 bool isAlive = currentState[i][j];
 
-                // Aplicando as regras do "Game of Life"
                 if (isAlive && (liveNeighbors < 2 || liveNeighbors > 3))
                 {
-                    nextState[i][j] = false; // Morte por solidão ou superpopulação
+                    nextState[i][j] = false; 
                     hasChanged = true;
                 }
                 else if (!isAlive && liveNeighbors == 3)
                 {
-                    nextState[i][j] = true; // Nascimento
+                    nextState[i][j] = true;
                     hasChanged = true;
                 }
                 else
                 {
-                    nextState[i][j] = isAlive; // Permanece igual
+                    nextState[i][j] = isAlive;
                 }
             }
         }

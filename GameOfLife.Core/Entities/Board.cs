@@ -7,7 +7,6 @@ public class Board
     public int Generation { get; private set; }
     public bool IsStable { get; private set; }
 
-    // Construtor para o EF Core
     private Board()
     {
         State = Array.Empty<bool[]>();

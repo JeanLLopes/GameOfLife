@@ -16,13 +16,12 @@ public static class BoardEndpoints
 
         group.MapPost("/", async (bool[][] initialState, IBoardRepository repo) =>
         {
-            if (initialState == null || initialState.Length == 0 || initialState[0].Length == 0) // [cite: 33]
+            if (initialState == null || initialState.Length == 0 || initialState[0].Length == 0)
             {
                 return Results.BadRequest("O estado inicial não pode ser vazio.");
             }
 
             var board = await repo.CreateAsync(initialState);
-            // Retorna o ID e o objeto criado
             return Results.Created($"/api/boards/{board.Id}", board);
         })
         .WithName("UploadBoard")
@@ -31,10 +30,10 @@ public static class BoardEndpoints
         group.MapGet("/{id:guid}/next", async (Guid id, IBoardRepository repo, IGameOfLifeService service) =>
         {
             var board = await repo.GetByIdAsync(id);
-            if (board == null) return Results.NotFound($"Board com ID {id} não encontrado."); // [cite: 32]
+            if (board == null) return Results.NotFound($"Board com ID {id} não encontrado.");
 
             var nextBoard = service.CalculateNextState(board);
-            await repo.UpdateAsync(nextBoard); // Salva o novo estado
+            await repo.UpdateAsync(nextBoard);
 
             return Results.Ok(nextBoard);
         })
@@ -43,18 +42,18 @@ public static class BoardEndpoints
 
         group.MapGet("/{id:guid}/states/{count:int}", async (Guid id, int count, IBoardRepository repo, IGameOfLifeService service) =>
         {
-            if (count <= 0) return Results.BadRequest("O número de estados deve ser positivo."); // [cite: 33, 40]
+            if (count <= 0) return Results.BadRequest("O número de estados deve ser positivo.");
 
             var board = await repo.GetByIdAsync(id);
             if (board == null) return Results.NotFound($"Board com ID {id} não encontrado.");
 
             for (int i = 0; i < count; i++)
             {
-                if (board.IsStable) break; // [cite: 53] Otimização
+                if (board.IsStable) break;
                 board = service.CalculateNextState(board);
             }
 
-            await repo.UpdateAsync(board); // Salva o estado final da simulação
+            await repo.UpdateAsync(board); 
             return Results.Ok(board);
         })
         .WithName("GetXStatesAway")
@@ -66,7 +65,7 @@ public static class BoardEndpoints
             IGameOfLifeService service,
             IOptions<GameOfLifeSettings> settings) =>
         {
-            var maxAttempts = settings.Value.MaxSimulationAttempts; // [cite: 23]
+            var maxAttempts = settings.Value.MaxSimulationAttempts; 
             var board = await repo.GetByIdAsync(id);
             if (board == null) return Results.NotFound($"Board com ID {id} não encontrado.");
 
@@ -74,7 +73,7 @@ public static class BoardEndpoints
             {
                 if (board.IsStable)
                 {
-                    await repo.UpdateAsync(board); // Salva o estado final
+                    await repo.UpdateAsync(board);
                     return Results.Ok(board);
                 }
                 board = service.CalculateNextState(board);

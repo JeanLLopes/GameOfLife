@@ -3,10 +3,6 @@ using System.Text.Json;
 
 namespace GameOfLife.Infrastructure.Data.Converters;
 
-/// <summary>
-/// Converte o estado bool[][] para uma string JSON para armazenamento no banco de dados
-/// e vice-versa.
-/// </summary>
 public class BoardStateConverter : ValueConverter<bool[][], string>
 {
     public BoardStateConverter() : base(
