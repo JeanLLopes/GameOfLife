@@ -8,18 +8,15 @@ COPY src/GameOfLife.Infrastructure/GameOfLife.Infrastructure.csproj src/GameOfLi
 RUN dotnet restore src/GameOfLife.Api/GameOfLife.Api.csproj
 
 # Copy the rest of the source code and publish the application
-COPY . .
-WORKDIR /src/src/GameOfLife.Api
+COPY src/ ./src/
+WORKDIR /src/GameOfLife.Api
 RUN dotnet publish -c Release -o /app --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app ./
 
-# Expose the default ASP.NET Core port
 EXPOSE 80
-
-# Set environment variable for ASP.NET Core URLs
 ENV ASPNETCORE_URLS=http://+:80
 
 ENTRYPOINT ["dotnet", "GameOfLife.Api.dll"]

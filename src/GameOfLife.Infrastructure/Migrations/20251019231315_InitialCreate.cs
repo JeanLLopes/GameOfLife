@@ -15,10 +15,10 @@ namespace GameOfLife.Infrastructure.Migrations
                 name: "Boards",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    State = table.Column<string>(type: "TEXT", nullable: false),
-                    Generation = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsStable = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Generation = table.Column<int>(type: "int", nullable: false),
+                    IsStable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

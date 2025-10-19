@@ -1,73 +1,76 @@
-# API Conway's Game of Life
+# Conway's Game of Life API
 
-Esta é uma implementação de uma API RESTful para simular o "Conway's Game of Life", como parte de um desafio de código.
+This is a RESTful API implementation to simulate "Conway's Game of Life", as part of a coding challenge.
 
-## Descrição do Problema
+## Problem Description
 
-A API deve permitir o upload de um estado de "board" (grid) inicial, e subsequentemente consultar os próximos estados da simulação, de acordo com as regras do Jogo da Vida.
+The API allows uploading an initial board (grid) state and subsequently querying the next simulation states according to the Game of Life rules.
 
-### Requisitos Funcionais
+### Functional Requirements
 
-1.  **[POST] /api/boards**: Faz upload de um novo estado de board (JSON `bool[][]`) e retorna um ID.
-2.  **[GET] /api/boards/{id}/next**: Retorna o próximo estado de simulação para um board.
-3.  **[GET] /api/boards/{id}/states/{x}**: Retorna o estado do board após `x` simulações.
-4.  **[GET] /api/boards/{id}/final**: Retorna o estado final (estável) do board. Retorna um erro se não estabilizar após `X` tentativas.
-5.  **Persistência**: O estado dos boards deve ser mantido mesmo se a API reiniciar.
+1.  **[POST] /api/boards**: Uploads a new board state (JSON `bool[][]`) and returns an ID.
+2.  **[GET] /api/boards/{id}/next**: Returns the next simulation state for a board.
+3.  **[GET] /api/boards/{id}/states/{x}**: Returns the board state after `x` simulations.
+4.  **[GET] /api/boards/{id}/final**: Returns the final (stable) state of the board. Returns an error if it does not stabilize after `X` attempts.
+5.  **Persistence**: The state of the boards is maintained even if the API restarts.
 
-## Explicação da Solução e Decisões de Arquitetura
+## Solution Overview and Architecture Decisions
 
-A solução foi construída usando .NET 7 e segue os princípios da **Clean Architecture** para garantir modularidade, testabilidade e separação de conceitos (SoC).
+The solution is built using .NET 7 and follows **Clean Architecture** principles to ensure modularity, testability, and separation of concerns (SoC).
 
-* **`GameOfLife.Core`**: Contém a lógica de negócio pura (as regras do Jogo da Vida) e as entidades (`Board`). Não possui dependências de infraestrutura (web ou banco de dados).
-* **`GameOfLife.Infrastructure`**: Implementa a persistência usando Entity Framework Core e um banco de dados SQLite (para portabilidade). Ele implementa a interface `IBoardRepository` definida no Core.
-* **`GameOfLife.Api`**: Expõe a funcionalidade via Minimal APIs. É responsável pela Injeção de Dependência, tratamento de erros e roteamento.
-* **`GameOfLife.Core.Tests`**: Testes unitários para a lógica de negócio, garantindo a corretude das regras de simulação.
+* **`GameOfLife.Core`**: Contains pure business logic (Game of Life rules) and entities (`Board`). No infrastructure dependencies (web or database).
+* **`GameOfLife.Infrastructure`**: Implements persistence using Entity Framework Core and a SQL Server database. Implements the `IBoardRepository` interface defined in Core.
+* **`GameOfLife.Api`**: Exposes functionality via Controllers (ASP.NET Core). Responsible for Dependency Injection, error handling, and routing.
+* **`GameOfLife.Core.Tests`**: Unit tests for business logic, ensuring correctness of simulation rules.
 
-## Suposições e Trade-offs 
+## Assumptions and Trade-offs
 
-* **Persistência do Estado**: Para persistir o `bool[][]` no banco de dados, utilizei um `ValueConverter` do EF Core para serializar o array para uma string JSON. Isso é simples e eficaz, mas menos "queryable" do que normalizar em tabelas `(Cell, X, Y)`.
-* **Banco de Dados**: Usei **SQLite** para que o projeto rode "fora da caixa" sem precisar de um servidor de banco de dados. A troca para SQL Server é trivial (mudar o pacote NuGet e a connection string).
-* **Performance**: O algoritmo de simulação é $O(r * c)$ para cada geração. Para boards gigantescos, otimizações (como "sparse matrix" ou "hashlife") seriam necessárias, mas estão fora do escopo deste desafio.
+* **State Persistence**: To persist the `bool[][]` in the database, an EF Core `ValueConverter` is used to serialize the array to a JSON string. This is simple and effective, but less "queryable" than normalizing into `(Cell, X, Y)` tables.
+* **Database**: The project now uses **SQL Server** for persistence. The connection string can be configured for your environment.
+* **Performance**: The simulation algorithm is $O(r * c)$ per generation. For very large boards, optimizations (like "sparse matrix" or "hashlife") would be necessary, but are out of scope for this challenge.
 
-## Como Executar Localmente 
+## How to Run Locally
 
-### Pré-requisitos
+### Prerequisites
 * .NET 7.0 SDK
+* SQL Server (local or Docker)
 
-### Passos
+### Steps
 
-1.  Clone o repositório.
-2.  Abra um terminal na pasta raiz da solução.
-3.  **Execute as migrações do banco de dados (EF Core):**
+1.  Clone the repository.
+2.  Open a terminal in the solution root folder.
+3.  **Update the database (EF Core migrations):**
     ```bash
-    # Instale a ferramenta global do EF Core (se ainda não tiver)
+    # Install the EF Core global tool if you don't have it
     dotnet tool install --global dotnet-ef
-    
-    # Navegue até o projeto de infraestrutura
+
+    # Navigate to the infrastructure project
     cd src/GameOfLife.Infrastructure
-    
-    # Crie a migração inicial
-    dotnet ef migrations add InitialCreate --startup-project ../GameOfLife.Api
-    
-    # Volte para a raiz
+
+    # Apply migrations (ensure your connection string is set for SQL Server)
+    dotnet ef database update --startup-project ../GameOfLife.Api
+
+    # Go back to the root
     cd ../..
     ```
-4.  **Execute a API:**
+4.  **Run the API:**
     ```bash
     dotnet run --project src/GameOfLife.Api
     ```
-5.  A API estará disponível em `http://localhost:<porta>`.
-6.  Acesse `http://localhost:<porta>/swagger` para ver a documentação da API e testar os endpoints.
+5.  The API will be available at `http://localhost:<port>`.
+6.  Access `http://localhost:<port>/swagger` to view the API documentation and test endpoints.
 
 ---
-### (Opcional) Executar com Docker
 
-1.  Build a imagem:
+### Run with Docker and Docker Compose
+
+1.  Build and start the containers:
     ```bash
-    docker build -t gameoflife-api .
+    docker-compose up --build
     ```
-2.  Execute o container:
-    ```bash
-    docker run -p 8080:80 -d gameoflife-api
-    ```
-3.  Acesse `http://localhost:8080/swagger`.
+2.  The API will be available at `http://localhost:8080/swagger`.
+
+**Note:**  
+- The `docker-compose.yml` file configures both the API and a SQL Server instance.
+- The connection string is set to connect to the SQL Server container by default.
+- The default SQL Server password is set in the compose file; change it as needed for your environment.

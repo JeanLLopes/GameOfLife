@@ -16,7 +16,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: src/GameOfLife.Api/Dockerfile
+      dockerfile: Dockerfile
     container_name: gameoflife-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
