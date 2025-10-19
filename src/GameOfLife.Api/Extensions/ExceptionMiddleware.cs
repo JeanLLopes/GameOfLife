@@ -24,14 +24,14 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Ocorreu uma exceção não tratada: {Message}", ex.Message); 
+            _logger.LogError(ex, "An unhandled exception occurred: {Message}", ex.Message); 
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             var response = _env.IsDevelopment()
                 ? new { message = ex.Message }
-                : new { message = "Ocorreu um erro interno no servidor." }; 
+                : new { message = "An internal server error occurred." }; 
 
             var json = JsonSerializer.Serialize(response);
             await context.Response.WriteAsync(json);

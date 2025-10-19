@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameOfLife.Api.IntegrationTests", "GameOfLife.Api.IntegrationTests", "{DBC1EFF8-7CD3-46FC-9F28-D0A1FE295F0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Api.IntegrationTests", "tests\GameOfLife.Api.IntegrationTests\GameOfLife.Api.IntegrationTests\GameOfLife.Api.IntegrationTests.csproj", "{82B21187-9514-41E8-96E0-2E0C580AFC2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,10 @@ Global
 		{4602A126-4F94-4AFE-9E86-0977A96F6F77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4602A126-4F94-4AFE-9E86-0977A96F6F77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4602A126-4F94-4AFE-9E86-0977A96F6F77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B21187-9514-41E8-96E0-2E0C580AFC2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B21187-9514-41E8-96E0-2E0C580AFC2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B21187-9514-41E8-96E0-2E0C580AFC2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B21187-9514-41E8-96E0-2E0C580AFC2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +65,8 @@ Global
 		{E377481A-0F3E-4568-840C-E8650ADD5564} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{27F1D8AB-AAF2-4969-AC7D-1A3041D40B76} = {188F21D2-399F-447D-983B-F5DF7F0C1CD4}
 		{4602A126-4F94-4AFE-9E86-0977A96F6F77} = {27F1D8AB-AAF2-4969-AC7D-1A3041D40B76}
+		{DBC1EFF8-7CD3-46FC-9F28-D0A1FE295F0E} = {188F21D2-399F-447D-983B-F5DF7F0C1CD4}
+		{82B21187-9514-41E8-96E0-2E0C580AFC2F} = {DBC1EFF8-7CD3-46FC-9F28-D0A1FE295F0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3566A790-C9A2-445D-BAA3-44CBB6039220}
