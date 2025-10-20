@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{188F21D2-399F-447D-983B-F5DF7F0C1CD4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameOfLife.Core.Tests", "GameOfLife.Core.Tests", "{27F1D8AB-AAF2-4969-AC7D-1A3041D40B76}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{27F1D8AB-AAF2-4969-AC7D-1A3041D40B76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Core.Tests", "tests\GameOfLife.Core.Tests\GameOfLife.Core.Tests.csproj", "{4602A126-4F94-4AFE-9E86-0977A96F6F77}"
 EndProject
@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameOfLife.Api.IntegrationTests", "GameOfLife.Api.IntegrationTests", "{DBC1EFF8-7CD3-46FC-9F28-D0A1FE295F0E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{DBC1EFF8-7CD3-46FC-9F28-D0A1FE295F0E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameOfLife.Api.IntegrationTests", "tests\GameOfLife.Api.IntegrationTests\GameOfLife.Api.IntegrationTests\GameOfLife.Api.IntegrationTests.csproj", "{82B21187-9514-41E8-96E0-2E0C580AFC2F}"
 EndProject
