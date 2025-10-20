@@ -2,6 +2,8 @@
 
 This is a RESTful API implementation to simulate "Conway's Game of Life", as part of a coding challenge.
 
+![Recording+2025-10-19+215818](https://github.com/user-attachments/assets/0063ac90-5a06-4830-8d7d-bf23ae391b8e)
+
 ## Features
 
 - Upload an initial board state and get an ID.
