@@ -2,5 +2,7 @@ namespace GameOfLife.Api.Extensions;
 
 public class GameOfLifeSettings
 {
-    public int MaxSimulationAttempts { get; set; } = 1000;
+    public const int DefaultMaxSimulationAttempts = 1000;
+
+    public int MaxSimulationAttempts { get; set; } = DefaultMaxSimulationAttempts;
 }

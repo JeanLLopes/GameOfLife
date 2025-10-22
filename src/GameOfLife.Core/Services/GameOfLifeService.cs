@@ -1,72 +1,106 @@
 ﻿using GameOfLife.Core.Entities;
 using GameOfLife.Core.Interfaces;
-using System.Security.Cryptography;
 
 namespace GameOfLife.Core.Services;
 
 public class GameOfLifeService : IGameOfLifeService
 {
+    private const int MinLiveNeighborsForSurvival = 2;
+    private const int MaxLiveNeighborsForSurvival = 3;
+    private const int LiveNeighborsForBirth = 3;
+
     public Board CalculateNextState(Board currentBoard)
     {
         if (currentBoard.IsStable)
             return currentBoard;
 
         var currentState = currentBoard.State;
-        int rows = currentState.Length;
-        int cols = currentState[0].Length;
-        var nextState = new bool[rows][];
-        bool hasChanged = false;
-
-        for (int i = 0; i < rows; i++)
-        {
-            nextState[i] = new bool[cols];
-            for (int j = 0; j < cols; j++)
-            {
-                int liveNeighbors = CountLiveNeighbors(currentState, i, j);
-                bool isAlive = currentState[i][j];
-
-                if (isAlive && (liveNeighbors < 2 || liveNeighbors > 3))
-                {
-                    nextState[i][j] = false; 
-                    hasChanged = true;
-                }
-                else if (!isAlive && liveNeighbors == 3)
-                {
-                    nextState[i][j] = true;
-                    hasChanged = true;
-                }
-                else
-                {
-                    nextState[i][j] = isAlive;
-                }
-            }
-        }
+        var dimensions = GetBoardDimensions(currentState);
+        var nextState = InitializeNextState(dimensions);
+        var hasChanged = ProcessCellStates(currentState, nextState, dimensions);
 
         currentBoard.SetNextState(nextState, !hasChanged);
         return currentBoard;
     }
 
-    private int CountLiveNeighbors(bool[][] board, int row, int col)
+    private record struct BoardDimensions(int Rows, int Columns);
+
+    private static BoardDimensions GetBoardDimensions(bool[][] state) =>
+        new(state.Length, state[0].Length);
+
+    private static bool[][] InitializeNextState(BoardDimensions dimensions)
     {
-        int count = 0;
-        int rows = board.Length;
-        int cols = board[0].Length;
-
-        for (int i = -1; i <= 1; i++)
+        var nextState = new bool[dimensions.Rows][];
+        for (int i = 0; i < dimensions.Rows; i++)
         {
-            for (int j = -1; j <= 1; j++)
+            nextState[i] = new bool[dimensions.Columns];
+        }
+        return nextState;
+    }
+
+    private bool ProcessCellStates(bool[][] currentState, bool[][] nextState, BoardDimensions dimensions)
+    {
+        bool hasChanged = false;
+
+        for (int row = 0; row < dimensions.Rows; row++)
+        {
+            for (int col = 0; col < dimensions.Columns; col++)
             {
-                if (i == 0 && j == 0) continue;
+                int liveNeighbors = CountLiveNeighbors(currentState, row, col);
+                bool isAlive = currentState[row][col];
 
-                int r = row + i;
-                int c = col + j;
+                var newState = DetermineCellState(isAlive, liveNeighbors);
+                nextState[row][col] = newState;
 
-                if (r >= 0 && r < rows && c >= 0 && c < cols && board[r][c])
+                if (newState != isAlive)
+                {
+                    hasChanged = true;
+                }
+            }
+        }
+
+        return hasChanged;
+    }
+
+    private static bool DetermineCellState(bool isAlive, int liveNeighbors)
+    {
+        if (isAlive)
+        {
+            return liveNeighbors >= MinLiveNeighborsForSurvival &&
+                   liveNeighbors <= MaxLiveNeighborsForSurvival;
+        }
+
+        return liveNeighbors == LiveNeighborsForBirth;
+    }
+
+    private static int CountLiveNeighbors(bool[][] board, int row, int col)
+    {
+        const int NeighborhoodSize = 1; 
+
+        var dimensions = new BoardDimensions(board.Length, board[0].Length);
+        int count = 0;
+
+        int startRow = Math.Max(0, row - NeighborhoodSize);
+        int endRow = Math.Min(dimensions.Rows - 1, row + NeighborhoodSize);
+        int startCol = Math.Max(0, col - NeighborhoodSize);
+        int endCol = Math.Min(dimensions.Columns - 1, col + NeighborhoodSize);
+
+        for (int r = startRow; r <= endRow; r++)
+        {
+            for (int c = startCol; c <= endCol; c++)
+            {
+                if (r == row && c == col)
+                {
+                    continue;
+                }
+
+                if (board[r][c])
                 {
                     count++;
                 }
             }
         }
+
         return count;
     }
 }
